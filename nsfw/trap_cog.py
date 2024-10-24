@@ -8,7 +8,7 @@ class TrapCog(commands.Cog):
 
     @commands.command(name='trap')
     async def nsfw_image(self, ctx):
-        # Check if the channel is NSFW
+        
         if not ctx.channel.is_nsfw():
             embed = discord.Embed(
                 title="NSFW Only",

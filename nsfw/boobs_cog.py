@@ -7,7 +7,7 @@ class boobsCog(commands.Cog):
         self.bot = bot
 
     @commands.command(name='boobs')
-    @commands.is_nsfw()  # This decorator ensures the command only works in NSFW channels
+    @commands.is_nsfw()  
     async def boob(self, ctx):
         
         api_url = "https://api.waifu.im/search/?included_tags=ero"

@@ -10,7 +10,7 @@ class NSFWCog(commands.Cog):
     async def nsfw_image(self, ctx, num_images: int = 1):
         """Fetches between 1 and 5 NSFW images from waifu.pics."""
 
-        # Ensure the command is used in an NSFW channel
+        
         if not ctx.channel.is_nsfw():
             embed = discord.Embed(
                 title="NSFW Only",
@@ -34,10 +34,10 @@ class NSFWCog(commands.Cog):
                         data = await response.json()
                         image_urls.append(data.get('url'))
                     else:
-                        # Notify the user if any image retrieval fails but continue fetching others
+                       
                         await ctx.send(f"Failed to retrieve an image in attempt {_ + 1}.")
         
-        # Send all successfully fetched images to the user
+        
         if image_urls:
             await ctx.send("\n".join(image_urls))
         else:

@@ -42,18 +42,18 @@ class AssCog(commands.Cog):
                     )
                     await ctx.send(embed=embed)
 
-    # Error handler to catch when the command is used in non-NSFW channels
+    
     @milf.error
     async def milf_error(self, ctx, error):
         if isinstance(error, commands.errors.NSFWChannelRequired):
             embed = discord.Embed(
                 title="NSFW Command",
                 description="This command can only be used in NSFW channels. Please try again in an appropriate channel.",
-                color=discord.Color.red()  # Red color for warning
+                color=discord.Color.red()  
             )
             embed.set_footer(text="Contact an admin if you think this is a mistake.")
             await ctx.send(embed=embed)
 
-# This is the required setup function
+
 async def setup(bot):
     await bot.add_cog(AssCog(bot))

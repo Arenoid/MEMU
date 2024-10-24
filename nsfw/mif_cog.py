@@ -9,12 +9,12 @@ class MilfCog(commands.Cog):
     @commands.command(name='milf')
     async def milf(self, ctx):
         """Fetches a random MILF image from waifu.im."""
-        # Check if the channel is NSFW
+        
         if not ctx.channel.is_nsfw():
             embed = discord.Embed(
                 title="NSFW Only",
                 description="This command can only be used in NSFW channels.",
-                color=0xFF0000  # Red color for error
+                color=0xFF0000  
             )
             await ctx.send(embed=embed)
             return
