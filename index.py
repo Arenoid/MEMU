@@ -59,6 +59,7 @@ async def load_cogs():
     await client.load_extension('nsfw.mif_cog')
     await client.load_extension('fun.joke_cog')
     await client.load_extension('info.userinfo_cog')
+    await client.load_extension('nsfw.r34_cog')
     
 
 

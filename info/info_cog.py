@@ -42,6 +42,7 @@ class HelpCog(commands.Cog):
         page3.add_field(name="`m!boobs`", value="Sends images of boobs.", inline=False)
         page3.add_field(name="`m!ass`", value="Sends images of ass.", inline=False)
         page3.add_field(name="`m!milf`", value="Shows you MILF pictures", inline=False)
+        page3.add_field(name="`m!r34 <character name> <number of images>`", value="Shows you r34 pictures of your choice.", inline=False)
         pages.append(page3)
 
         # Page 4: Moderation Commands
@@ -50,7 +51,7 @@ class HelpCog(commands.Cog):
         page4.add_field(name="`m!mute <@user> <time>`", value="Mutes the user from the server.", inline=False)
         page4.add_field(name="`m!kick <@user>`", value="Kicks the user from the server.", inline=False)
         page4.add_field(name="`m!ban <@user>`", value="Bans the user permanently from the server.", inline=False)
-        page4.add_field(name="`m!warn <@user>`", value="Warns the user and takes action on the basis of warns! (3 warns = mute || 5 warns = kick || 10 warns = ban)", inline=False)
+        page4.add_field(name="`m!warn <@user>`", value="Warns the user and takes action on the basis of warns! (3 warns = mute | 5 warns = kick | 10 warns = ban)", inline=False)
         page4.add_field(name="`m!purge <no of messages>`", value="Purges messages from a channel.", inline=False)
         pages.append(page4)
 
