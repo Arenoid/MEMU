@@ -8,11 +8,12 @@ import asyncio
 class r34(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        self.semaphore = asyncio.Semaphore(10)  # Control concurrency
 
     @commands.command(name='r34')
     async def nsfw_image(self, ctx, character: str = None, num_images: int = None):
         """Fetches NSFW images of a specific character from SaraHentai."""
-        
+
         # Check if the command is used in an NSFW channel
         if not ctx.channel.is_nsfw():
             await ctx.send("🔞 This command can only be used in NSFW channels.")
@@ -48,9 +49,9 @@ class r34(commands.Cog):
                         # Collect post links
                         post_links = [post.find('a')['href'] for post in soup.select('.hitmag-post')]
 
-                        # Use asyncio.gather to fetch images from posts concurrently
+                        # Use asyncio.gather to fetch images from posts concurrently with a semaphore
                         tasks = [self.fetch_post_image(session, post_link, image_urls) for post_link in post_links]
-                        await asyncio.gather(*tasks)
+                        await asyncio.gather(*[self.semaphore_task(task) for task in tasks])
 
                         # Convert set to list for sampling
                         image_urls_list = list(image_urls)
@@ -70,6 +71,11 @@ class r34(commands.Cog):
                         await ctx.send(f"❌ Error: Failed to retrieve images for '{character}'. Status code: {response.status}")
             except Exception as e:
                 await ctx.send(f"❌ An error occurred: {str(e)}")
+
+    async def semaphore_task(self, task):
+        """Wrap the task with a semaphore."""
+        async with self.semaphore:
+            return await task
 
     async def fetch_post_image(self, session, post_link, image_urls):
         """Fetch the image from the individual post page."""

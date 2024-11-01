@@ -3,72 +3,64 @@ from discord.ext import commands
 import os
 from dotenv import load_dotenv
 import time
+import asyncio
 
+# Load environment variables from .env file
 load_dotenv()
 TOKEN = os.getenv("DISCORD_TOKEN")
+print("Token:", TOKEN)  # Add this line in main.py right after loading the .env file
 
 
+
+# Initialize the bot with intents and command prefix
 client = commands.Bot(command_prefix="m!", intents=discord.Intents.all())
 
 @client.event
 async def on_ready():
     print(f"Logged in as {client.user}!")
-    await client.change_presence(activity=discord.Game(f"m!info"))
-
+    await client.change_presence(activity=discord.Game("m!info"))
 
 @client.command()
 async def ping(ctx):
+    """Ping command to measure response time"""
     start_time = time.time()
     
-
-    embed = discord.Embed(title="Pong! 🏓", color=0x9900FF) 
+    # Create initial embed message for pong
+    embed = discord.Embed(title="Pong! 🏓", color=0x9900FF)
     initial_message = await ctx.send(embed=embed)
+    
+    # Calculate response time and update embed
     end_time = time.time()
     response_time = (end_time - start_time) * 1000
     embed.add_field(name="Response Time", value=f"{response_time:.2f} ms")
     await initial_message.edit(embed=embed)
 
-
-
-
 async def load_cogs():
-    await client.load_extension('fun.eight_ball_cog')
-    await client.load_extension('sfw.waifu_cog')
-    await client.load_extension('fun.weather_cog')
-    await client.load_extension('fun.meme_cog')
-    await client.load_extension('nsfw.hentai_cog')
-    await client.load_extension('info.info_cog')
-    await client.load_extension('sfw.neko_cog')
-    await client.load_extension('nsfw.blowjob_cog')
-    await client.load_extension('nsfw.trap_cog')
-    await client.load_extension('sfw.yeet_cog')
-    await client.load_extension('info.anime_cog')
-    await client.load_extension('moderation.ban_cog')
-    await client.load_extension('moderation.kick_cog')
-    await client.load_extension('moderation.mute_cog')
-    await client.load_extension('fun.randomvid_cog')
-    await client.load_extension('nsfw.ass_cog')
-    await client.load_extension('nsfw.boobs_cog')
-    await client.load_extension('sfw.bonk_cog')
-    await client.load_extension('sfw.bully_cog')
-    await client.load_extension('sfw.kill_cog')
-    await client.load_extension('sfw.poke_cog')
-    await client.load_extension('fun.trivia_cog')
-    await client.load_extension('moderation.warn_cog')
-    await client.load_extension('moderation.purge_cog')
-    await client.load_extension('nsfw.mif_cog')
-    await client.load_extension('fun.joke_cog')
-    await client.load_extension('info.userinfo_cog')
-    await client.load_extension('nsfw.r34_cog')
-    
+    """Dynamically loads cogs from specified directories"""
+    cogs = [
+        'fun.eight_ball_cog', 'sfw.waifu_cog', 'fun.weather_cog', 'fun.meme_cog',
+        'nsfw.hentai_cog', 'info.info_cog', 'sfw.neko_cog', 'nsfw.blowjob_cog',
+        'nsfw.trap_cog', 'sfw.yeet_cog', 'info.anime_cog', 'moderation.ban_cog',
+        'moderation.kick_cog', 'moderation.mute_cog', 'fun.randomvid_cog',
+        'nsfw.ass_cog', 'nsfw.boobs_cog', 'sfw.bonk_cog', 'sfw.bully_cog',
+        'sfw.kill_cog', 'sfw.poke_cog', 'fun.trivia_cog', 'moderation.warn_cog',
+        'moderation.purge_cog', 'nsfw.mif_cog', 'fun.joke_cog', 'info.userinfo_cog',
+        'nsfw.r34_cog', 'maths.graph_cog'
+    ]
 
-
+    for cog in cogs:
+        try:
+            await client.load_extension(cog)
+            print(f"Loaded extension: {cog}")
+        except Exception as e:
+            print(f"Failed to load extension {cog}: {e}")
 
 async def main():
+    """Main function to run the bot"""
     async with client:
         await load_cogs()
         await client.start(TOKEN)
 
+# Run the bot
 if __name__ == '__main__':
-    import asyncio
     asyncio.run(main())
