@@ -43,7 +43,12 @@ class HelpCog(commands.Cog):
             .add_field(name="`m!kick <@user>`", value="Kicks the user from the server.", inline=False)
             .add_field(name="`m!ban <@user>`", value="Bans the user permanently.", inline=False)
             .add_field(name="`m!warn <@user>`", value="Warns the user. Actions taken based on warns.", inline=False)
-            .add_field(name="`m!purge <number>`", value="Deletes messages from a channel.", inline=False)
+            .add_field(name="`m!purge <number>`", value="Deletes messages from a channel.", inline=False),
+
+            discord.Embed(title="**Help Command - Math Commands**", description="Commands for solving mathematical problems and graphing.", color=0x800080)
+            .add_field(name="__**📐 MATH COMMANDS**__", value="Commands for math calculations and graphing functions.", inline=False)
+            .add_field(name="`m!graph <equation>`", value="Graphs a mathematical equation (text or image).", inline=False)
+            
         ]
 
         message = await ctx.send(embed=pages[0])
